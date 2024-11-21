@@ -14,6 +14,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\TextColumn;
 use Illuminate\Support\Str;
 use Filament\Forms\Components\Set;
 use Illuminate\Database\Eloquent\Builder;

@@ -16,10 +16,19 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Set;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Forms\Components\Group; 
+use Filament\Forms\Components\Select;
 
 class ProductResource extends Resource
 {
@@ -35,9 +44,9 @@ class ProductResource extends Resource
                 Section::make('Product Information')->schema([
                     TextInput::make('name')
                         ->required()
-                        ->live(onBlur : ture)
+                        ->live(onBlur :true)
                         ->maxLength(255)
-                        ->afterStateUpdate(function(string $operation, $state, Set $set){
+                        ->afterStateUpdated(function(string $operation, $state, Set $set){
                             if ($operation !== 'create'){
                                 return ;
                             }
@@ -48,13 +57,13 @@ class ProductResource extends Resource
                     TextInput::make('slug')
                         ->required()
                         ->maxLength(255)
-                        ->disable()
-                        ->dehytreate()
+                        ->disabled()
+                        ->dehydrated()
                         ->unique(Product::class, 'slug',ignoreRecord:true),
 
                     MarkdownEditor::make('description') // Fixed typo here
                         ->columnSpanFull()
-                        ->fileAttachmentDirectory('products')
+                        ->fileAttachmentsDirectory('products')
                 ])->columns(2),
 
                 Section::make('image')
@@ -118,33 +127,33 @@ class ProductResource extends Resource
                 ->money('INR')
                 ->sortable(),
 
-                IcomColumn::make('Is_featured')
+                IconColumn::make('Is_featured')
                 ->boolean(),
 
-                 IcomColumn::make('on_sale')
+                IconColumn::make('on_sale')
                 ->boolean(),
 
-                 IcomColumn::make('in_stock')
+                IconColumn::make('in_stock')
                 ->boolean(),
 
-                 IcomColumn::make('is_active')
+                IconColumn::make('is_active')
                 ->boolean(),
 
                 TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
-                ->toggleable(isToggledHiddenByDefualt:true),
+                ->toggleable(isToggledHiddenByDefault:true),
 
                  TextColumn::make('updated_at')
                 ->dateTime()
                 ->sortable()
-                ->toggleable(isToggledHiddenByDefualt:true),
+                ->toggleable(isToggledHiddenByDefault:true),
             ])
             ->filters([
-                SetectFilter::make('category')
+                SelectFilter::make('category')
                 ->relationship('category','name'),
 
-                 SetectFilter::make('product')
+                SelectFilter::make('product')
                 ->relationship('product','name'),
             ])
             ->actions([
