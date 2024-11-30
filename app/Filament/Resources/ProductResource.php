@@ -50,12 +50,10 @@ class ProductResource extends Resource
                         ->required()
                         ->live(onBlur :true)
                         ->maxLength(255)
-                        ->afterStateUpdated(function(string $operation, $state, Set $set){
-                            if ($operation !== 'create'){
-                                return ;
+                        ->afterStateUpdated(function (string $operation, $state, callable $set) {
+                            if ($operation === 'create') {
+                               $set('slug', str($state)->slug());
                             }
-
-                            $set ('slug',Str::slug($state));
                         }),
 
                     TextInput::make('slug')

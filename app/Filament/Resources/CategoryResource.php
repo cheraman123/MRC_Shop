@@ -15,8 +15,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TextColumn;
-use Illuminate\Support\Str;
 use Filament\Forms\Components\Set;
+use Filament\Forms\Components\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\ActionGroup;
@@ -41,10 +41,15 @@ class CategoryResource extends Resource
                 Grid::make()
                 ->schema([
                     TextInput::make('name')
-                    ->required()
-                    ->maxLength(255)
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $operation, $state, Set $set) => $opration === 'create' ? $set('slug',Str::slug($state)):null),
+    ->required()
+    ->maxLength(255)
+    ->live(onBlur: true)
+    ->afterStateUpdated(function (string $operation, $state, callable $set) {
+        if ($operation === 'create') {
+           $set('slug', str($state)->slug());
+        }
+    }),
+
 
                     TextInput::make('slug')
                     ->maxLength(255)

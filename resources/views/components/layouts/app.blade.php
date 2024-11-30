@@ -6,12 +6,14 @@
 
         <title>{{ $title ?? 'MRC Shopt' }}</title>
         @vite(['resources/css/app.css','resources/js/app.js'])
-        @livewireStles
+        @livewireStyles
     </head>
     <body class="bg-slate-200 dark:bg-slate-700">
+        @livewire('mrc.navbar')
         <main>
         {{ $slot }}
         </main>
+        @livewire('mrc.footer')
         @livewireScripts
     </body>
 

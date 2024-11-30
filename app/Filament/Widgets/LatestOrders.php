@@ -23,7 +23,7 @@ class LatestOrders extends BaseWidget
     {
         return $table
             ->query(
-                OrderResource::getEEloquentQuery())
+                OrderResource::getEloquentQuery())
                 ->defaultPageinationPageOption(5)
                 ->defaultSort('created_at','desc')
                 

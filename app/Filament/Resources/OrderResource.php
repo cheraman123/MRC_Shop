@@ -19,16 +19,21 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TextColumn;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\Group; 
 use Filament\Forms\Components\Repeater; 
 use Filament\Forms\Components\Textarea; 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Support\Number;
 
 class OrderResource extends Resource
@@ -212,7 +217,7 @@ class OrderResource extends Resource
                 ->searchable(),
 
                 SelectColumn::make('status')
-                ->optins([
+                ->options([
                     'new'=>'New',
                     'processin'=>'Processing',
                     'shipping'=>'Shipping',
@@ -225,12 +230,12 @@ class OrderResource extends Resource
                 TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
-                ->toggleable(isToggleHiddenByDefault:true),
+                ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
                 ->dateTime()
                 ->sortable()
-                ->toggleable(isToggleHiddenByDefault:true),
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
