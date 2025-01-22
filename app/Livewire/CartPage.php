@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Helpers\CartManagement;
 use App\Livewire\Mrc\Navbar;
 use Livewire\Component;
-use Livewire\Attribute\Title;
+use Livewire\Attributes\Title;
 
 #[Title('Cart - MRC-Shop')]
 class CartPage extends Component
@@ -25,7 +25,7 @@ class CartPage extends Component
 
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
 
-        $this->dispatch('update-cart-count',total_count:count($this->cart_items))->to(Navbar::class);
+        $this->dispatch('update-cart-count', total_count: count($this->cart_items))->to(Navbar::class);
     }
 
     public function increaseQty($product_id){
